@@ -85,7 +85,9 @@ begin
    begin
       Check ("8.1 Count is valid", Count_Result <= 16);
       Check ("8.2 Count is non-zero", Count_Result > 0);
+      pragma Warnings (Off);
       Check ("8.3 Exact count matches single item", Count_Result = 1);
+      pragma Warnings (On);
    end;
 
    -- TEST 9 — Quantum Counting Search multiple matches
@@ -95,7 +97,9 @@ begin
    begin
       Check ("9.1 Count is valid", Count_Result <= 16);
       Check ("9.2 Count is positive", Count_Result > 0);
+      pragma Warnings (Off);
       Check ("9.3 Exact count matches expected multiple (4 items)", Count_Result = 4);
+      pragma Warnings (On);
    end;
 
    -- TEST 10 — Multi-Solution Grover Search expected M=4
