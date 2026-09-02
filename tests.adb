@@ -15,34 +15,6 @@ procedure Tests is
          Fail_Count := Fail_Count + 1;
       end if;
    end Check;
-
-   -- Sample oracle functions for testing
-   function Oracle_Single_5 (Index : Item_Index) return Boolean is
-   begin
-      return Index = 5;
-   end Oracle_Single_5;
-
-   function Oracle_Single_0 (Index : Item_Index) return Boolean is
-   begin
-      return Index = 0;
-   end Oracle_Single_0;
-
-   function Oracle_Last_15 (Index : Item_Index) return Boolean is
-   begin
-      return Index = 15;
-   end Oracle_Last_15;
-
-   function Oracle_Multiple_Even (Index : Item_Index) return Boolean is
-   begin
-      return (Integer(Index) mod 4) = 0;
-   end Oracle_Multiple_Even;
-
-   function Oracle_None (Index : Item_Index) return Boolean is
-      pragma Unreferenced(Index);
-   begin
-      return False;
-   end Oracle_None;
-
 begin
    -- TEST 1 — Optimal Iterations basic checks
    Put_Line ("TEST 1 — Optimal Iterations N=16, M=1");
@@ -61,7 +33,7 @@ begin
    declare
       Result : constant Item_Index := Standard_Grover_Search(16, Oracle_Single_5'Access);
    begin
-      Check ("3.1 Result within search space", Result < 16);
+      Check ("3.1 Result within search space", Natural(Result) < 16);
       Check ("3.2 Oracle evaluates true for result", Oracle_Single_5(Result));
       Check ("3.3 Correct target found", Result = 5);
    end;
@@ -71,7 +43,7 @@ begin
    declare
       Result : constant Item_Index := Standard_Grover_Search(8, Oracle_Single_0'Access);
    begin
-      Check ("4.1 Result within search space", Result < 8);
+      Check ("4.1 Result within search space", Natural(Result) < 8);
       Check ("4.2 Oracle evaluates true for result", Oracle_Single_0(Result));
       Check ("4.3 Correct target found", Result = 0);
    end;
@@ -81,7 +53,7 @@ begin
    declare
       Result : constant Item_Index := Standard_Grover_Search(16, Oracle_Last_15'Access);
    begin
-      Check ("5.1 Result within search space", Result < 16);
+      Check ("5.1 Result within search space", Natural(Result) < 16);
       Check ("5.2 Oracle evaluates true for result", Oracle_Last_15(Result));
       Check ("5.3 Correct target found", Result = 15);
    end;
@@ -91,7 +63,7 @@ begin
    declare
       Result : constant Item_Index := Amplitude_Amplification_Search(16, Oracle_Single_5'Access, 1.0);
    begin
-      Check ("6.1 Result within bounds", Result < 16);
+      Check ("6.1 Result within bounds", Natural(Result) < 16);
       Check ("6.2 Oracle matches result", Oracle_Single_5(Result));
       Check ("6.3 Target identified successfully", Result = 5);
    end;
@@ -101,7 +73,7 @@ begin
    declare
       Result : constant Item_Index := Amplitude_Amplification_Search(8, Oracle_Single_0'Access, 2.0);
    begin
-      Check ("7.1 Result within bounds", Result < 8);
+      Check ("7.1 Result within bounds", Natural(Result) < 8);
       Check ("7.2 Oracle matches result", Oracle_Single_0(Result));
       Check ("7.3 Target identified successfully", Result = 0);
    end;
@@ -131,7 +103,7 @@ begin
    declare
       Result : constant Item_Index := Multi_Solution_Grover_Search(16, Oracle_Multiple_Even'Access, 4);
    begin
-      Check ("10.1 Result within bounds", Result < 16);
+      Check ("10.1 Result within bounds", Natural(Result) < 16);
       Check ("10.2 Oracle matches result", Oracle_Multiple_Even(Result));
       Check ("10.3 Valid solution found among multiple", Oracle_Multiple_Even(Result));
    end;
@@ -141,9 +113,9 @@ begin
    declare
       Result : constant Item_Index := Multi_Solution_Grover_Search(16, Oracle_Multiple_Even'Access, 4);
    begin
-      Check ("11.1 Result within bounds", Result < 16);
+      Check ("11.1 Result within bounds", Natural(Result) < 16);
       Check ("11.2 Result satisfies multiple criterion", (Integer(Result) mod 4) = 0);
-      Check ("11.3 Robust execution", Result < 16);
+      Check ("11.3 Robust execution", Natural(Result) < 16);
    end;
 
    -- TEST 12 — Exception Handling (No Solution Found)
@@ -175,7 +147,7 @@ begin
    begin
       Check ("13.1 Single element iteration count zero/low", Res1 = 0);
       Check ("13.2 Quantum counting exact on small set", Res2 = 1);
-      Check ("13.3 Smallest search space N=2 functional", Res3 < 2);
+      Check ("13.3 Smallest search space N=2 functional", Natural(Res3) < 2);
    end;
 
    Put_Line ("");
