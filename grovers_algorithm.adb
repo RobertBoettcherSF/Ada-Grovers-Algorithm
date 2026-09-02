@@ -14,6 +14,35 @@ package body Grovers_Algorithm is
    use Float_Vectors;
 
    -----------------------------------------------------------------
+   -- Test Oracle Implementations
+   -----------------------------------------------------------------
+   function Oracle_Single_5 (Index : Item_Index) return Boolean is
+   begin
+      return Index = 5;
+   end Oracle_Single_5;
+
+   function Oracle_Single_0 (Index : Item_Index) return Boolean is
+   begin
+      return Index = 0;
+   end Oracle_Single_0;
+
+   function Oracle_Last_15 (Index : Item_Index) return Boolean is
+   begin
+      return Index = 15;
+   end Oracle_Last_15;
+
+   function Oracle_Multiple_Even (Index : Item_Index) return Boolean is
+   begin
+      return (Integer(Index) mod 4) = 0;
+   end Oracle_Multiple_Even;
+
+   function Oracle_None (Index : Item_Index) return Boolean is
+      pragma Unreferenced (Index);
+   begin
+      return False;
+   end Oracle_None;
+
+   -----------------------------------------------------------------
    -- Optimal_Iterations
    -----------------------------------------------------------------
    function Optimal_Iterations 
