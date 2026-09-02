@@ -33,7 +33,7 @@ package Grovers_Algorithm is
      (N      : Search_Space_Size;
       Oracle : not null Oracle_Function) return Item_Index
      with Pre => N > 0,
-          Post => Standard_Grover_Search'Result < N;
+          Post => Natural(Standard_Grover_Search'Result) < Natural(N);
 
    --  Amplitude Amplification Search: variant allowing customized initial weight/bias.
    function Amplitude_Amplification_Search
@@ -41,7 +41,7 @@ package Grovers_Algorithm is
       Oracle         : not null Oracle_Function;
       Initial_Weight : Float) return Item_Index
      with Pre => N > 0 and then Initial_Weight > 0.0,
-          Post => Amplitude_Amplification_Search'Result < N;
+          Post => Natural(Amplitude_Amplification_Search'Result) < Natural(N);
 
    --  Quantum Counting Search: estimates the number of marked items in the search space.
    function Quantum_Counting_Search
@@ -56,6 +56,6 @@ package Grovers_Algorithm is
       Oracle     : not null Oracle_Function;
       Expected_M : Search_Space_Size) return Item_Index
      with Pre => N > 0 and then Expected_M > 0 and then Expected_M <= N,
-          Post => Multi_Solution_Grover_Search'Result < N;
+          Post => Natural(Multi_Solution_Grover_Search'Result) < Natural(N);
 
 end Grovers_Algorithm;
