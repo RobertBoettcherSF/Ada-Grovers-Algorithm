@@ -89,7 +89,7 @@ package body Grovers_Algorithm is
       Iters := Optimal_Iterations(N, Search_Space_Size(M_Count));
 
       --  Initialize uniform superposition
-      Amps.Set_Length(Count);
+      Amps.Set_Length(Ada.Containers.Count_Type(Count));
       for I in 0 .. Count - 1 loop
          Amps.Replace_Element(I, Initial);
       end loop;
@@ -171,7 +171,7 @@ package body Grovers_Algorithm is
       Iters := Optimal_Iterations(N, Search_Space_Size(M_Count));
 
       --  Initialize with custom weighted superposition
-      Amps.Set_Length(Count);
+      Amps.Set_Length(Ada.Containers.Count_Type(Count));
       Norm := Sqrt(Float(Count)) * Initial_Weight;
       if Norm = 0.0 then
          Norm := 1.0;
@@ -260,7 +260,7 @@ package body Grovers_Algorithm is
    begin
       Iters := Optimal_Iterations(N, Expected_M);
 
-      Amps.Set_Length(Count);
+      Amps.Set_Length(Ada.Containers.Count_Type(Count));
       for I in 0 .. Count - 1 loop
          Amps.Replace_Element(I, Initial);
       end loop;
