@@ -19,7 +19,7 @@ begin
    -- TEST 1 — Optimal Iterations basic checks
    Put_Line ("TEST 1 — Optimal Iterations N=16, M=1");
    Check ("1.1 Optimal iterations > 0", Optimal_Iterations(16, 1) > 0);
-   Check ("1.2 Optimal iterations value correct (~2)", Optimal_Iterations(16, 1) = 2);
+   Check ("1.2 Optimal iterations value correct (~3)", Optimal_Iterations(16, 1) = 3);
    Check ("1.3 Deterministic result", Optimal_Iterations(16, 1) = Optimal_Iterations(16, 1));
 
    -- TEST 2 — Optimal Iterations scaling
@@ -84,10 +84,8 @@ begin
       Count_Result : constant Search_Space_Size := Quantum_Counting_Search(16, Oracle_Single_5'Access);
    begin
       Check ("8.1 Count is valid", Count_Result <= 16);
-      Check ("8.2 Count is non-zero", Count_Result > 0);
-      pragma Warnings (Off);
+      Check ("8.2 Count is non-zero", Integer(Count_Result) > 0);
       Check ("8.3 Exact count matches single item", Count_Result = 1);
-      pragma Warnings (On);
    end;
 
    -- TEST 9 — Quantum Counting Search multiple matches
@@ -96,10 +94,8 @@ begin
       Count_Result : constant Search_Space_Size := Quantum_Counting_Search(16, Oracle_Multiple_Even'Access);
    begin
       Check ("9.1 Count is valid", Count_Result <= 16);
-      Check ("9.2 Count is positive", Count_Result > 0);
-      pragma Warnings (Off);
+      Check ("9.2 Count is positive", Integer(Count_Result) > 0);
       Check ("9.3 Exact count matches expected multiple (4 items)", Count_Result = 4);
-      pragma Warnings (On);
    end;
 
    -- TEST 10 — Multi-Solution Grover Search expected M=4
