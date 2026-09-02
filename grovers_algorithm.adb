@@ -50,7 +50,7 @@ package body Grovers_Algorithm is
       M : Search_Space_Size := 1) return Iteration_Count is
       F_N : constant Float := Float(N);
       F_M : constant Float := Float(M);
-      Val : constant Float := Floor((Ada.Numerics.Pi / 4.0) * Sqrt(F_N / F_M));
+      Val : constant Float := Float'Floor((Ada.Numerics.Pi / 4.0) * Sqrt(F_N / F_M));
       Res : constant Integer := Integer(Val);
    begin
       if Res < 0 then
