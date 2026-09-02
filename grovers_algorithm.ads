@@ -1,61 +1,20 @@
---  -------------------------------------------------------------------------
---  Package: Grovers_Algorithm
---  Description: Simulation and implementation of Grover's quantum search
---               algorithm and its variants in Ada 2023, including standard
---               search, amplitude amplification, quantum counting, and
---               multi-solution search.
---  -------------------------------------------------------------------------
-
-package Grovers_Algorithm is
-
-   --  Custom domain types
-   type Search_Space_Size is range 1 .. 1048576;
-   type Item_Index is range 0 .. 1048575;
-   type Probability is delta 0.0001 range 0.0 .. 1.0;
-   type Iteration_Count is range 0 .. 10000;
-
-   --  Exceptions
-   Invalid_Search_Space : exception;
-   No_Solution_Found    : exception;
-
-   --  Oracle function access type representing the black-box function f(x) -> Boolean
-   type Oracle_Function is access function (Index : Item_Index) return Boolean;
-
-   --  Calculates the optimal number of Grover iterations: R = floor((pi/4) * sqrt(N/M))
-   function Optimal_Iterations 
-     (N : Search_Space_Size; 
-      M : Search_Space_Size := 1) return Iteration_Count
-     with Pre => N > 0 and then M > 0 and then M <= N,
-          Post => Optimal_Iterations'Result >= 0;
-
-   --  Standard Grover Search: finds a marked item in an unstructured search space of size N.
-   function Standard_Grover_Search
-     (N      : Search_Space_Size;
-      Oracle : not null Oracle_Function) return Item_Index
-     with Pre => N > 0,
-          Post => Natural(Standard_Grover_Search'Result) < Natural(N);
-
-   --  Amplitude Amplification Search: variant allowing customized initial weight/bias.
-   function Amplitude_Amplification_Search
-     (N              : Search_Space_Size;
-      Oracle         : not null Oracle_Function;
-      Initial_Weight : Float) return Item_Index
-     with Pre => N > 0 and then Initial_Weight > 0.0,
-          Post => Natural(Amplitude_Amplification_Search'Result) < Natural(N);
-
-   --  Quantum Counting Search: estimates the number of marked items in the search space.
-   function Quantum_Counting_Search
-     (N      : Search_Space_Size;
-      Oracle : not null Oracle_Function) return Search_Space_Size
-     with Pre => N > 0,
-          Post => Quantum_Counting_Search'Result <= N;
-
-   --  Multi-Solution Grover Search: optimized for searching spaces with multiple marked items.
-   function Multi_Solution_Grover_Search
-     (N          : Search_Space_Size;
-      Oracle     : not null Oracle_Function;
-      Expected_M : Search_Space_Size) return Item_Index
-     with Pre => N > 0 and then Expected_M > 0 and then Expected_M <= N,
-          Post => Natural(Multi_Solution_Grover_Search'Result) < Natural(N);
-
-end Grovers_Algorithm;
+robert@RB-SF:~/Downloads/Ada-Grovers-Algorithm-main$ make test
+mkdir -p obj bin
+gnatmake -gnatwa -gnat2022 -Pgrovers_algorithm.gpr
+Compile
+   [Ada]          tests.adb
+tests.adb:62:66: error: subprogram must not be deeper than access type
+tests.adb:72:65: error: subprogram must not be deeper than access type
+tests.adb:82:66: error: subprogram must not be deeper than access type
+tests.adb:92:74: error: subprogram must not be deeper than access type
+tests.adb:102:73: error: subprogram must not be deeper than access type
+tests.adb:112:80: error: subprogram must not be deeper than access type
+tests.adb:122:80: error: subprogram must not be deeper than access type
+tests.adb:132:72: error: subprogram must not be deeper than access type
+tests.adb:142:72: error: subprogram must not be deeper than access type
+tests.adb:156:71: error: subprogram must not be deeper than access type
+tests.adb:173:71: error: subprogram must not be deeper than access type
+tests.adb:174:63: error: subprogram must not be deeper than access type
+gprbuild: *** compilation phase failed
+make: *** [Makefile:12: bin/tests] Error 5
+robert@RB-SF:~/Downloads/Ada-Grovers-Algorithm-main$ 
